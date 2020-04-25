@@ -1,0 +1,44 @@
+
+
+#homeSection {
+    text-align: center;
+}
+
+#homeH1{
+    padding-top: 50px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+#homeH3 {
+    justify-self: center;
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+#homeBtn {
+    background-color: rgb(112, 56, 164);
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+#answerOptions{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.aButtons{
+    background-color: rgb(112, 56, 164);
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    display: block;
+    margin-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    
+    
+    
+}
