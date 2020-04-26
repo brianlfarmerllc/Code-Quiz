@@ -29,6 +29,16 @@
     margin: 0 auto;
 }
 
+#allDone{
+    width: 60%;
+    margin: 0 auto;
+}
+
+#rightWrong{
+    width: 60%;
+    margin: 0 auto;
+}
+
 .aButtons{
     background-color: rgb(112, 56, 164);
     font-size: 24px;
@@ -38,7 +48,22 @@
     margin-top: 0.5em;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    
-    
-    
+}
+.form-inline {
+    width: 100%;
+    justify-content: start;
+    margin: 0 auto;
+    padding-top: 1em;
+}
+.hsInput {
+    margin-right: 5%;
+    font-size: 24px;
+}
+.hsSubmit{
+    background-color: rgb(112, 56, 164);
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    padding-right: 2em;
+    padding-left: 2em;
 }
