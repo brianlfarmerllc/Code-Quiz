@@ -24,6 +24,10 @@
     font-weight: bold;
     color: white;
 }
+#high-scores{
+    width: 60%;
+    margin: 0 auto;
+}
 #answerOptions{
     width: 60%;
     margin: 0 auto;

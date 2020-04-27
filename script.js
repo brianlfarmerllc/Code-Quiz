@@ -2,13 +2,16 @@
 var body = document.body;
 
 // Variables for creating elements
+var questionNumber = 0
+var currentCorrect = 0
 var btn1 = document.createElement("button");
 var btn2 = document.createElement("button");
 var btn3 = document.createElement("button");
 var btn4 = document.createElement("button");
 var allBtn = [btn1, btn2, btn3, btn4];
-var input = document.createElement("input")
-var btn5 = document.createElement("button")
+var input = document.createElement("input");
+var btn5 = document.createElement("button");
+var hsLi = document.createElement("li");
 
 // Attributes of class and id's set to created button elements 
 btn1.setAttribute("class", "aButtons");
@@ -16,10 +19,12 @@ btn2.setAttribute("class", "aButtons");
 btn3.setAttribute("class", "aButtons");
 btn4.setAttribute("class", "aButtons");
 input.setAttribute("class", "hsInput");
-input.setAttribute("id", "enterI");
+input.setAttribute("id", "enterInitials");
 input.setAttribute("placeholder", "Enter Initials");
 btn5.setAttribute("class", "hsSubmit");
-btn5.setAttribute("id", "submitI");
+btn5.setAttribute("id", "submitHighscore");
+btn5.setAttribute("type", "submit");
+hsLi.setAttribute("class", "form-inline");
 
 // List of variable selectors listed from top to bottom
 var timer = document.getElementById("timer")
@@ -32,343 +37,178 @@ var answerChoices = document.getElementById("answerOptions")
 var done = document.getElementById("allDone");
 var enter = document.getElementById("enter");
 var finalScore = document.getElementById("finalScore");
+var scoresList = document.getElementById("scoresList");
 var isRW = document.getElementById("isRW");
+var hsSubmit = document.getElementById("submitHighscore");
 
-// Questions displayed throughout the game
+// empty array to puch the hs too
+var hsAll = [];
+
+
+// Questions, answer choices, and correct answer displayed throughout the game
 var qArray = [
-    "Finish the quote...Boy have you lost your mind cause I'll help you _________",
-    "What did Michael hit Meredith with?",
-    "What type of farm does Dwight own?",
-    "What is Kevin's family Recipe",
-    "Who is not a Cast Character on the show?"
+    { q: "Finish the quote...Boy have you lost your mind cause I'll help you _________", a: "Find It", aList: ["Out Brother", "Find It", "Build A Boat", "If You Need Help"] },
+    { q: "What did Michael hit Meredith with?", a: "His Car", aList: ["A Roll of Toilet Paper", "Cupid's Arrow", "A Stapler", "His Car"] },
+    { q: "What type of farm does Dwight own?", a: "Beet Farm", aList: ["A Cattle Ranch", "Soy Bean Farm", "Beet Farm", "A Bunny Ranch"] },
+    { q: "What is Kevin's family Recipe", a: "Chili", aList: ["Chili", "Hot Dogs", "beef Ribs", "Lasagna"] },
+    { q: "Who is not a Cast Character on the show?", a: "Michael Scarn", aList: ["Michael Scarn", "Jim Halpert", "Kelly Kapoor", "Creed Bratton"] },
 ];
-// Answers Array
-var aArray = ["Find It", "His Car", "Beet Farm", "Chile", "Michael Scarn"];
 
 // begining score timer
-var scoreSec = 100;
-
-
+var scoreSec = 75;
+var scoreTimer;
+// begins the game and starts the timer
 startQ.addEventListener("click", function () {
 
-    var scoreTimer = setInterval(function () {
+    scoreTimer = setInterval(function () {
         timer.textContent = "Time: " + scoreSec;
-        // scoreSec--;
-        
+        scoreSec--;
+
 
     }, 1000);
 
-    question1();
+    for (let i = 0; i < allBtn.length; i++) {
+        answerChoices.appendChild(allBtn[i]);
+    }
+
+    currentQuestion();
 })
 
-function question1() {
+
+// generates the questions in the quiz game
+function currentQuestion() {
+
+
     clear.innerHTML = "";
     H1.setAttribute("style", "text-align: start");
-    H1.textContent = qArray[0]
+    H1.textContent = qArray[questionNumber].q
+    var currentAnswers = qArray[questionNumber]["aList"];
+    currentCorrect = qArray[questionNumber].a
 
-    for (let i = 0; i < allBtn.length; i++) {
-        answerChoices.appendChild(allBtn[i]);
+    for (let i = 0; i < currentAnswers.length; i++) {
+        allBtn[i].textContent = currentAnswers[i];
     }
-    btn1.textContent = "Out Brother";
-    btn2.textContent = aArray[0];
-    btn3.textContent = "Build A Boat";
-    btn4.textContent = "If You Need Help";
 
-    btn1.addEventListener("click", function (evet) {
-        event.stopPropagation();
-        if (btn1.textContent === aArray[0]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question2();
-        } else {
-            isRW.textContent = "Previous Answer Was Correct!";
-            scoreSec = scoreSec - 10;
-            question2();
-        }
-    })
-    btn2.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn2.textContent === aArray[0]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question2();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question2();
-        }
-    })
-    btn3.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn3.textContent === aArray[0]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question2();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question2();
-        }
-    })
-    btn4.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn4.textContent === aArray[0]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question2();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question2();
-        }
-    })
-   
 }
-function question2() {
-    H1.setAttribute("style", "text-align: start");
-    H1.textContent = qArray[1];
-
-    for (let i = 0; i < allBtn.length; i++) {
-        answerChoices.appendChild(allBtn[i]);
+// checks to see if you should go to next current question or stop timer and go to all done
+function checkLength() {
+    if (questionNumber === qArray.length) {
+        allDone();
+        clearInterval(scoreTimer);
+    } else {
+        currentQuestion();
     }
-    btn1.textContent = "A Roll of Toilet Paper";
-    btn2.textContent = "Cupid's Arrow";
-    btn3.textContent = "A Stapler";
-    btn4.textContent = aArray[1];
 
-    btn1.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn1.textContent === aArray[1]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question3();
-        } else {
-            isRW.textContent = "Previous Answer Was Correct!";
-            scoreSec = scoreSec - 10;
-            question3();
-        }
-    })
-    btn2.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn2.textContent === aArray[1]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question3();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question3();
-        }
-    })
-    btn3.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn3.textContent === aArray[1]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question3();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question3();
-        }
-    })
-    btn4.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn4.textContent === aArray[1]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question3();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question3();
-        }
-    })
 }
-function question3() {
-    H1.setAttribute("style", "text-align: start");
-    H1.textContent = qArray[2];
+// 4 event listeners to check the answers to the questions
+btn1.addEventListener("click", function (evet) {
+    event.stopPropagation();
+    if (btn1.textContent === currentCorrect) {
+        isRW.textContent = "Previous Answer Was Correct!";
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
 
-    for (let i = 0; i < allBtn.length; i++) {
-        answerChoices.appendChild(allBtn[i]);
+
+    } else {
+        isRW.textContent = "Previous Answer Was Wrong!";
+        scoreSec = scoreSec - 10;
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
+
     }
-    btn1.textContent = "A Cattle Ranch";
-    btn2.textContent = "Soy Bean Farm";
-    btn3.textContent = "Beet Farm";
-    btn4.textContent = "A Bunny Ranch";
-
-    btn1.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn1.textContent === aArray[2]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question4();
-        } else {
-            isRW.textContent = "Previous Answer Was Correct!";
-            scoreSec = scoreSec - 10;
-            question4();
-        }
-    })
-    btn2.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn2.textContent === aArray[2]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question4();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question4();
-        }
-    })
-    btn3.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn3.textContent === aArray[2]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question4();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question4();
-        }
-    })
-    btn4.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn4.textContent === aArray[2]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question4();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question4();
-        }
-    })
-}
-function question4() {
-    H1.setAttribute("style", "text-align: start");
-    H1.textContent = qArray[3];
-
-    for (let i = 0; i < allBtn.length; i++) {
-        answerChoices.appendChild(allBtn[i]);
+})
+btn2.addEventListener("click", function (event) {
+    event.stopPropagation();
+    if (btn2.textContent === currentCorrect) {
+        isRW.textContent = "Previous Answer Was Correct!";
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
+    } else {
+        isRW.textContent = "Previous Answer Was Wrong!";
+        scoreSec = scoreSec - 10;
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
     }
-    btn1.textContent = aArray[3];
-    btn2.textContent = "Hot Dogs";
-    btn3.textContent = "Beef Ribs";
-    btn4.textContent = "Lasagna";
-
-    btn1.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn1.textContent === aArray[3]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question5();
-        } else {
-            isRW.textContent = "Previous Answer Was Correct!";
-            scoreSec = scoreSec - 10;
-            question5();
-        }
-    })
-    btn2.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn2.textContent === aArray[3]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question5();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question5();
-        }
-    })
-    btn3.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn3.textContent === aArray[3]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question5();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question5();
-        }
-    })
-    btn4.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn4.textContent === aArray[3]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            question5();
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            question5();
-        }
-    })
-}
-function question5() {
-    H1.setAttribute("style", "text-align: start");
-    H1.textContent = qArray[4];
-
-    for (let i = 0; i < allBtn.length; i++) {
-        answerChoices.appendChild(allBtn[i]);
+})
+btn3.addEventListener("click", function (event) {
+    event.stopPropagation();
+    if (btn3.textContent === currentCorrect) {
+        isRW.textContent = "Previous Answer Was Correct!";
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
+    } else {
+        isRW.textContent = "Previous Answer Was Wrong!";
+        scoreSec = scoreSec - 10;
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
     }
-    btn1.textContent = aArray[4];
-    btn2.textContent = "Jim Halpert";
-    btn3.textContent = "Kelly Kapoor";
-    btn4.textContent = "Creed Bratton";
-
-    btn1.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn1.textContent === aArray[4]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            allDone()
-        } else {
-            isRW.textContent = "Previous Answer Was Correct!";
-            scoreSec = scoreSec - 10;
-            allDone()
-        }
-    })
-    btn2.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn2.textContent === aArray[4]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            allDone()
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            allDone()
-        }
-    })
-    btn3.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn3.textContent === aArray[4]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            allDone()
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            allDone()
-        }
-    })
-    btn4.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (btn4.textContent === aArray[4]) {
-            isRW.textContent = "Previous Answer Was Correct!";
-            allDone()
-        } else {
-            isRW.textContent = "Previous Answer Was Wrong!";
-            scoreSec = scoreSec - 10;
-            allDone()
-        }
-    })
-}
-function allDone(){
-    answerChoices.innerHTML= "";
+})
+btn4.addEventListener("click", function (event) {
+    event.stopPropagation();
+    if (btn4.textContent === currentCorrect) {
+        isRW.textContent = "Previous Answer Was Correct!";
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
+    } else {
+        isRW.textContent = "Previous Answer Was Wrong!";
+        scoreSec = scoreSec - 10;
+        questionNumber++;
+        currentCorrect++;
+        checkLength();
+    }
+})
+// generates the page to submit your High Score
+function allDone() {
+    timer.textContent = "";
+    answerChoices.innerHTML = "";
     isRW.textContent = "";
     H1.setAttribute("style", "text-align: start");
     H1.textContent = "All done!";
     finalScore.setAttribute("style", "text-align: start; margin-top: 1em");
-    finalScore.textContent = "Your final score is ";
+    finalScore.textContent = "Your final score is " + scoreSec;
     enter.appendChild(input);
     enter.appendChild(btn5)
     btn5.textContent = "Submit"
 }
+// event function when you submit your score
+btn5.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    var newInput = document.getElementById("enterInitials");
+    var userInput = newInput.value.trim();
+    var newScore = userInput + " - " + scoreSec + " seconds";
+    hsAll.push(newScore);
+    storeHS()
+    highScoresList();
+})
+// generates the High Scores list
+function highScoresList() {
+    H1.setAttribute("style", "text-align: start");
+    H1.textContent = "Highscores";
+    done.innerHTML = "";
+
+    for (let i = 0; i < hsAll.length; i++) {
+        scoresList.appendChild(hsLi)
+    }
+
+    for (let i = 0; i < hsAll.length; i++) {
+        hsLi.textContent = hsAll[i];
+
+    }
+
+}
+// function to store High Scores to local storage
+function storeHS() {
+    localStorage.setItem("hsAll", JSON.stringify(hsAll));
+  }
 
 
 
 
-
-    
-    
-
-
-
-
-    
-    
