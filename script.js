@@ -40,6 +40,7 @@ var finalScore = document.getElementById("finalScore");
 var scoresList = document.getElementById("scoresList");
 var isRW = document.getElementById("isRW");
 var hsSubmit = document.getElementById("submitHighscore");
+var hsButtons = document.getElementById("hsButtons");
 
 // empty array to puch the hs too
 
@@ -64,7 +65,7 @@ var scoreSec = 75;
 var scoreTimer;
 
 // begins the game and starts the timer
-startQ.addEventListener("click", function () {
+function startGame() {
 
     scoreTimer = setInterval(function () {
         timer.textContent = "Time: " + scoreSec;
@@ -78,7 +79,7 @@ startQ.addEventListener("click", function () {
     }
 
     currentQuestion();
-})
+}
 
 
 // generates the questions in the quiz game
@@ -107,7 +108,7 @@ function checkLength() {
 
 }
 // 4 event listeners to check the answers to the questions
-btn1.addEventListener("click", function (evet) {
+btn1.addEventListener("click", function (event) {
     event.stopPropagation();
     if (btn1.textContent === currentCorrect) {
         isRW.textContent = "Previous Answer Was Correct!";
@@ -200,23 +201,39 @@ function highScoresList() {
     H1.setAttribute("style", "text-align: start");
     H1.textContent = "Highscores";
     done.innerHTML = "";
-   
-
-
+    var homeHs = ["Start Quiz", "Clear High Scores"];
+  
     for (let i = 0; i < hsAll.length; i++) {
         var hsLi = document.createElement("li");
         hsLi.setAttribute("class", "high-scores");
         scoresList.appendChild(hsLi);
         hsLi.textContent = hsAll[i];
-        
     }
-
+    for (let i = 0; i < homeHs.length; i++) {
+        var newButtons = document.createElement("button");
+        newButtons.setAttribute("class", "aButtons");
+        newButtons.setAttribute("style", "display: inline; margin: 25px 50px 50px 50px" )
+        hsButtons.appendChild(newButtons);
+        newButtons.textContent = homeHs[i];
+    }
 }
+
+
 // function to store High Scores to local storage
 function storeHS() {
     localStorage.setItem("hsAll", JSON.stringify(hsAll));
   }
 
 
+  
+function restartHS(event){
+    if (event.target.textContent === "Start Quiz") {
+        location.reload();
+    } 
+    else if (event.target.textContent === "Clear High Scores") {
+        localStorage.clear();
+    }
+}
 
-
+  startQ.addEventListener("click", startGame)
+  hsButtons.addEventListener("click", restartHS)
