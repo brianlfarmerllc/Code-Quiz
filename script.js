@@ -240,6 +240,7 @@ function restartHS(event){
 // 
 function currentHS(event){
     if (event.target.textContent === "View High Scores") {
+        answerChoices.innerHTML = "";
         clear.innerHTML = "";
         isRW.textContent = "";
         highScoresList();
