@@ -16,39 +16,50 @@
 </head>
 
 <body>
+    <!-- header that holds the score timer and the high scores link -->
     <header class="container">
         <div class="row justify-content-between mt-3"
             style="color:rgb(112, 56, 164); font-size: large; font-weight: bold;">
+            <!-- high score anchor -->
             <div class="col-12 col-lg-2 col-md-4 col-sm-12">
                 <a id="high-scores">View High Scores</a>
             </div>
+            <!-- div for score timer -->
             <div class="col-12 col-lg-2 col-md-4 col-sm-12">
                 <p id="timer">Time: 0</p>
             </div>
         </div>
     </header>
-
+    <!--  main area controled by java script to generate questions, answers, and hichscore-->
     <Main id="main">
+
         <Section id="homeSection">
+            <!-- landing h1 main page text - this text is also -->
             <h1 id="homeH1">The Office Trivia Game</h1>
+            <!-- landing page game instructions -->
             <div id="clear" style=width:100%>
                 <h3 id="homeH3">Try to answer "The Office" related trivia questions within the time limit. Keep in mind
                     each wrong answer will decrease your score time by 10 seconds.</h3>
+                <!-- button to start the game -->
                 <button id="homeBtn">Start Quiz</button>
             </div>
+            <!-- div with empty ul to append the highscore list items -->
             <div id="high-scores">
                 <ul id="scoresList"></ul>
             </div>
+            <!-- empty div to generate the answer options -->
             <div id="answerOptions"></div>
+            <!-- empty div to  generate the all done page in including the submit form-->
             <div id="allDone">
                 <h4 id="finalScore"></h4>
-                <form class="form-inline" id="enter">
-                    
-                </form>
+                <form class="form-inline" id="enter"></form>
             </div>
+            <!-- isRW text is replaced with correct or wrong depending on answeer choice. -->
             <div id="rightWrong">
                 <hr />
                 <h4 id="isRW">Ready to have some fun!</h4>
+                <!-- generates the start game over or clear highscore buttons -->
+                <div id="hsButtons"></div>
             </div>
         </Section>
 

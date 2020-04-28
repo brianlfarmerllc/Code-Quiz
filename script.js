@@ -200,6 +200,7 @@ function highScoresList() {
     H1.setAttribute("style", "text-align: start");
     H1.textContent = "Highscores";
     done.innerHTML = "";
+   
 
 
     for (let i = 0; i < hsAll.length; i++) {
