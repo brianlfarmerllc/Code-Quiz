@@ -1,42 +1,15 @@
-# 04 Web APIs: Code Quiz
+# got the quarantine blues?
 
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment, which is typically a combination of multiple-choice questions and interactive challenges. Build a timed code quiz with multiple-choice questions. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.
+Here is a fun and challenging quiz game on the on of the best TV shows, "The Office".
 
-## User Story
+# here are the rules
 
-```
-AS A coding bootcamp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
-```
+Once you start the quiz by clicking on the start quiz button, a timer will begin to counting down. Pay close attention to you time as you progress. This will be your score at the end of the game. After you answer a question you will automatically be given the next question. The goal is to answer all the questions as quickly as possible. As a caution though for each wrong answer your time score will have 10 seconds deducted from the total, so be sure to read all the answers carefully!
 
-## Acceptance Criteria
+Once all the questions have been answered you will be given your final score. Submit your initials by entering them in the initials input area and clicking the submit button. Play against your friends and see who can get the higheest score. Be careful though. You never know when the quarantine blues might have me up at night updating new questions for the game. 
 
-```
-GIVEN I am taking a code quiz
-WHEN I click the start button
-THEN a timer starts and I am presented with a question
-WHEN I answer a question
-THEN I am presented with another question
-WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
-WHEN all questions are answered or the timer reaches 0
-THEN the game is over
-WHEN the game is over
-THEN I can save my initials and score
-```
+# as a bonus
 
-The following animation demonstrates the application functionality:
+Join your friends on zoom and test their knowledge of "The Office". Its a great tool to see who is actually worthy of your friendship. 
 
-![code quiz](./Assets/04-web-apis-homework-demo.gif)
 
-### Review
-
-You are required to submit the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.

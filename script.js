@@ -57,6 +57,7 @@ var qArray = [
 // begining score timer
 var scoreSec = 75;
 var scoreTimer;
+
 // begins the game and starts the timer
 startQ.addEventListener("click", function () {
 
@@ -183,6 +184,7 @@ btn5.addEventListener("click", function (event) {
 
     var newInput = document.getElementById("enterInitials");
     var userInput = newInput.value.trim();
+    
     var newScore = userInput + " - " + scoreSec + " seconds";
     hsAll.push(newScore);
     storeHS()
