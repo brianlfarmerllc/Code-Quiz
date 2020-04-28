@@ -42,8 +42,13 @@ var isRW = document.getElementById("isRW");
 var hsSubmit = document.getElementById("submitHighscore");
 
 // empty array to puch the hs too
-var hsAll = [];
 
+var hsAll;
+if(localStorage.hsAll === undefined) {
+     hsAll = [];
+} else {
+     hsAll = JSON.parse(window.localStorage.hsAll);
+}
 
 // Questions, answer choices, and correct answer displayed throughout the game
 var qArray = [
@@ -89,11 +94,11 @@ function currentQuestion() {
     for (let i = 0; i < currentAnswers.length; i++) {
         allBtn[i].textContent = currentAnswers[i];
     }
-
+    
 }
 // checks to see if you should go to next current question or stop timer and go to all done
 function checkLength() {
-    if (questionNumber === qArray.length) {
+    if (questionNumber === qArray.length || scoreTimer < 0) {
         allDone();
         clearInterval(scoreTimer);
     } else {
@@ -196,13 +201,13 @@ function highScoresList() {
     H1.textContent = "Highscores";
     done.innerHTML = "";
 
-    for (let i = 0; i < hsAll.length; i++) {
-        scoresList.appendChild(hsLi)
-    }
 
     for (let i = 0; i < hsAll.length; i++) {
+        var hsLi = document.createElement("li");
+        hsLi.setAttribute("class", "high-scores");
+        scoresList.appendChild(hsLi);
         hsLi.textContent = hsAll[i];
-
+        
     }
 
 }
