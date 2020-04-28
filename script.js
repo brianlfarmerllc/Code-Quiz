@@ -27,6 +27,7 @@ btn5.setAttribute("type", "submit");
 hsLi.setAttribute("class", "form-inline");
 
 // List of variable selectors listed from top to bottom
+var topScores = document.getElementById("high-scores")
 var timer = document.getElementById("timer")
 var homeSection = document.getElementById("homeSection");
 var H1 = document.getElementById("homeH1");
@@ -201,7 +202,7 @@ function highScoresList() {
     H1.setAttribute("style", "text-align: start");
     H1.textContent = "Highscores";
     done.innerHTML = "";
-    var homeHs = ["Start Quiz", "Clear High Scores"];
+    var homeHs = ["Return Home", "Clear High Scores and Return Home"];
   
     for (let i = 0; i < hsAll.length; i++) {
         var hsLi = document.createElement("li");
@@ -212,7 +213,7 @@ function highScoresList() {
     for (let i = 0; i < homeHs.length; i++) {
         var newButtons = document.createElement("button");
         newButtons.setAttribute("class", "aButtons");
-        newButtons.setAttribute("style", "display: inline; margin: 25px 50px 50px 50px" )
+        newButtons.setAttribute("style", "display: inline; margin: 25px 25px 50px 25px" )
         hsButtons.appendChild(newButtons);
         newButtons.textContent = homeHs[i];
     }
@@ -225,15 +226,27 @@ function storeHS() {
   }
 
 
-  
+// function to either restart the game or erase the local storage hs and restart the game
 function restartHS(event){
-    if (event.target.textContent === "Start Quiz") {
+    if (event.target.textContent === "Return Home") {
         location.reload();
     } 
-    else if (event.target.textContent === "Clear High Scores") {
+    else if (event.target.textContent === "Clear High Scores and Return Home") {
         localStorage.clear();
+        location.reload();
     }
 }
 
+// 
+function currentHS(event){
+    if (event.target.textContent === "View High Scores") {
+        clear.innerHTML = "";
+        isRW.textContent = "";
+        highScoresList();
+    } 
+}
+// global event listeners
+
   startQ.addEventListener("click", startGame)
   hsButtons.addEventListener("click", restartHS)
+  topScores.addEventListener("click", currentHS)
